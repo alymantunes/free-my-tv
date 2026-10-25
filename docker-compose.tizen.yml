@@ -1,0 +1,13 @@
+# docker compose -f docker-compose.tizen.yml run --rm tizen <comando>
+# O certificado Tizen fica no volume "tizen-data" (segredo: nunca no repositório).
+services:
+  tizen:
+    build: docker/tizen
+    image: free-my-tv-tizen
+    volumes:
+      - .:/work
+      - tizen-data:/home/dev/tizen-studio-data
+    working_dir: /work
+
+volumes:
+  tizen-data:
