@@ -8,6 +8,10 @@ services:
       - .:/work
       - tizen-data:/home/dev/tizen-studio-data
     working_dir: /work
+    # build.py move o .wgt assinado da pasta temporária para /work; entre /tmp e o bind mount do Windows
+    # o `shutil.move` copia e falha no utime. Com a pasta temporária no mesmo mount, é só um rename.
+    environment:
+      TMPDIR: /work
 
 volumes:
   tizen-data:

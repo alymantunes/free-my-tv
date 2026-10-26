@@ -19,6 +19,10 @@ RUN curl -fsSL -o web-cli.bin \
     && ./web-cli.bin --accept-license /home/dev/tizen-studio \
     && rm web-cli.bin
 
+# No Linux o CLI guarda a senha do certificado num chaveiro (D-Bus), que o container não tem: sem isso a
+# senha some e `tizen package` falha com "Invaild password". Este substituto grava no volume tizen-data.
+COPY --chown=dev:dev --chmod=755 secret-tool /home/dev/tizen-studio/tools/certificate-encryptor/secret-tool
+
 # build.py procura ~/tizen-studio/tools/ide/bin/tizen
 ENV PATH="/home/dev/tizen-studio/tools/ide/bin:/home/dev/tizen-studio/tools:${PATH}"
 WORKDIR /work
